@@ -78,8 +78,12 @@ const FoodDetailsScreen = ({ history }) => {
             <CardContent style={{ padding: 12, textAlign: "center" }}>
               <Fastfood fontSize="default" color="primary" />
               <Typography
-                style={{ letterSpacing: 2 }}
-                style={{ fontSize: 12, color: grey[500], marginTop: 6 }}
+                style={{
+                  fontSize: 12,
+                  color: grey[500],
+                  marginTop: 6,
+                  letterSpacing: 2,
+                }}
               >
                 SERVINGS
               </Typography>
@@ -93,8 +97,12 @@ const FoodDetailsScreen = ({ history }) => {
             <CardContent style={{ padding: 12, textAlign: "center" }}>
               <TimerRounded fontSize="default" color="primary" />
               <Typography
-                style={{ letterSpacing: 2 }}
-                style={{ fontSize: 12, color: grey[500], marginTop: 6 }}
+                style={{
+                  fontSize: 12,
+                  color: grey[500],
+                  marginTop: 6,
+                  letterSpacing: 2,
+                }}
               >
                 COOK TIME
               </Typography>
@@ -108,12 +116,11 @@ const FoodDetailsScreen = ({ history }) => {
             <CardContent style={{ padding: 12, textAlign: "center" }}>
               <Fireplace fontSize="default" color="primary" />
               <Typography
-                style={{ letterSpacing: 2 }}
                 style={{
                   fontSize: 12,
                   color: grey[500],
                   marginTop: 6,
-                  letterSpacing: 1,
+                  letterSpacing: 2,
                 }}
               >
                 ENERGY

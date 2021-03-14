@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import {
   Box,
   Grid,
@@ -14,6 +14,7 @@ import LoginScreen from "./Screens/LoginScreen";
 import { useState } from "react";
 
 function App() {
+  // eslint-disable-next-line
   const [dark, setDark] = useState(true);
 
   const theme = createMuiTheme({
