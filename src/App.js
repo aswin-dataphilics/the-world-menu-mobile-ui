@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import {
   Box,
@@ -11,7 +12,8 @@ import SideNavBar from "./Components/SideNavBar";
 import MenuItemsScreen from "./Screens/MenuItemsScreen";
 import FoodDetailsScreen from "./Screens/FoodDetailsScreen";
 import LoginScreen from "./Screens/LoginScreen";
-import { useState } from "react";
+import AdminLoginScreen from "./Screens/Admin/LoginScreen";
+import AdminDashboard from "./Screens/Admin/DashBoard";
 
 function App() {
   // eslint-disable-next-line
@@ -30,7 +32,9 @@ function App() {
       <CssBaseline />
       <Switch>
         <Route path="/login" component={LoginScreen} exact />
-        <>
+        <Route path="/admin" component={AdminLoginScreen} exact />
+        <Route path="/admin/dashboard" component={AdminDashboard} />
+        <Route>
           <Header />
           <Grid container>
             <Grid
@@ -49,7 +53,7 @@ function App() {
               </Switch>
             </Grid>
           </Grid>
-        </>
+        </Route>
       </Switch>
     </ThemeProvider>
   );
