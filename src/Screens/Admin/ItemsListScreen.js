@@ -4,7 +4,6 @@ import {
   Grid,
   Typography,
   Button,
-  TextField,
   Box,
   Table,
   TableCell,
@@ -12,15 +11,19 @@ import {
   TableHead,
   TableBody,
   IconButton,
-  makeStyles,
+  Checkbox,
 } from "@material-ui/core";
-import { Edit, Delete } from "@material-ui/icons";
+import {
+  Edit,
+  Delete,
+  Visibility,
+  VisibilityOff,
+  List,
+} from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 
-const useStyles = makeStyles((theme) => {});
-
-const ItemsCategory = () => {
+const ItemsListScreen = () => {
   return (
     <>
       <Header />
@@ -28,35 +31,42 @@ const ItemsCategory = () => {
         <Grid container>
           <Grid item xs={12} component={Box} display="flex" flexDirection="row">
             <Typography variant="h4" color="default">
-              {"Items Category"}
+              {"Food Items"}
             </Typography>
             <Button
               variant="contained"
               style={{ marginLeft: "auto" }}
               color="primary"
               component={Link}
-              to="/admin/itemscategory/add"
+              to="/admin/fooditems/add"
             >
               {"Add New"}
             </Button>
           </Grid>
-          <Grid item style={{ marginTop: 20 }} xs={12}>
+          <Grid item style={{ marginTop: 29 }} xs={12}>
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ fontSize: 19 }}>
-                    {"Category Name"}
-                  </TableCell>
-                  <TableCell style={{ fontSize: 19 }} align="right">
-                    Actions
-                  </TableCell>
+                  <TableCell>{"Item Name"}</TableCell>
+                  <TableCell>{"Category"}</TableCell>
+                  <TableCell>{"Price"}</TableCell>
+                  <TableCell>{"Extra Option(s)"}</TableCell>
+                  <TableCell align="right">{"Action"}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow hover>
-                  <TableCell style={{ fontSize: 18 }}>Popular</TableCell>
+                <TableRow hover style={{ fontSize: 18 }}>
+                  <TableCell>{"Chicken Kadhai"}</TableCell>
+                  <TableCell>{"Non Veg"}</TableCell>
+                  <TableCell>{"Rs: 280"}</TableCell>
+                  <TableCell>{"4"}</TableCell>
                   <TableCell>
-                    <Box display="flex" flexDirection="row">
+                    <Box
+                      style={{ maxWidth: "fit-content" }}
+                      display="flex"
+                      flexDirection="row"
+                      ml="auto"
+                    >
                       <IconButton
                         color="inherit"
                         style={{ marginLeft: "auto" }}
@@ -67,6 +77,12 @@ const ItemsCategory = () => {
                       <IconButton color="inherit" arial-label="Remove">
                         <Delete />
                       </IconButton>
+                      <Checkbox
+                        icon={<VisibilityOff />}
+                        checkedIcon={<Visibility />}
+                        name="visibility"
+                        color="primary"
+                      />
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -79,4 +95,4 @@ const ItemsCategory = () => {
   );
 };
 
-export default ItemsCategory;
+export default ItemsListScreen;

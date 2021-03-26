@@ -23,7 +23,7 @@ import Header from "./Header";
 
 const useStyles = makeStyles((theme) => {});
 
-const AddCategory = () => {
+const AddCategoryScreen = () => {
   return (
     <>
       <Header />
@@ -80,4 +80,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default AddCategoryScreen;

@@ -25,7 +25,13 @@ const Header = () => {
           >
             {"Caterogry"}
           </Button>
-          <Button color="inherit" size="large" style={{ marginLeft: 4 }}>
+          <Button
+            color="inherit"
+            component={Link}
+            to="/admin/fooditems"
+            size="large"
+            style={{ marginLeft: 4 }}
+          >
             {"Food Items"}
           </Button>
           <Button color="inherit" size="large" style={{ marginLeft: 4 }}>

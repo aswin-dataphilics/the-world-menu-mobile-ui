@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 
-const DashBoard = () => {
+const DashBoardScreen = () => {
   return (
     <>
       <Header />
@@ -9,4 +9,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default DashBoardScreen;
