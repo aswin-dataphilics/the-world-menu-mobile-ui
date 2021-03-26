@@ -14,6 +14,8 @@ import FoodDetailsScreen from "./Screens/FoodDetailsScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import AdminLoginScreen from "./Screens/Admin/LoginScreen";
 import AdminDashboard from "./Screens/Admin/DashBoard";
+import AdminItemsCategory from "./Screens/Admin/ItemsCategory";
+import AdminAddItemsCategory from "./Screens/Admin/AddCategory";
 
 function App() {
   // eslint-disable-next-line
@@ -34,6 +36,15 @@ function App() {
         <Route path="/login" component={LoginScreen} exact />
         <Route path="/admin" component={AdminLoginScreen} exact />
         <Route path="/admin/dashboard" component={AdminDashboard} />
+        <Route
+          path="/admin/itemscategory"
+          component={AdminItemsCategory}
+          exact
+        />
+        <Route
+          path="/admin/itemscategory/add"
+          component={AdminAddItemsCategory}
+        />
         <Route>
           <Header />
           <Grid container>

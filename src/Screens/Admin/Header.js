@@ -1,17 +1,10 @@
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  IconButton,
-  Typography,
-  Box,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Button, Typography, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <AppBar color="default">
+    <AppBar color="default" position="relative" style={{ marginBottom: 30 }}>
       <Toolbar>
         <Typography
           variant="h5"
@@ -24,7 +17,12 @@ const Header = () => {
         </Typography>
 
         <Box display="flex" flexDirection="row" ml={"auto"}>
-          <Button color="inherit" size="large">
+          <Button
+            color="inherit"
+            size="large"
+            component={Link}
+            to={"/admin/itemscategory"}
+          >
             {"Caterogry"}
           </Button>
           <Button color="inherit" size="large" style={{ marginLeft: 4 }}>

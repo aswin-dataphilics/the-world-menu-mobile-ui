@@ -19,24 +19,37 @@ const MenuItemsScreen = () => {
           <Grid item key={item._id}>
             <Card>
               <CardActionArea component={Link} to="/food">
-                <CardMedia
-                  component="img"
-                  image={item.image}
-                  alt={item.name}
-                  title={item.name}
-                  height={120}
-                />
-                <CardContent
-                  component={Box}
-                  style={{ padding: 3, paddingLeft: 6, paddingRight: 6 }}
-                  display="flex"
-                  flexDirection="row"
-                >
-                  <Typography>{item.name}</Typography>
-                  <Typography style={{ marginLeft: "auto" }}>
-                    Rs. {item.price}
-                  </Typography>
-                </CardContent>
+                <Grid container>
+                  <Grid item xs={5}>
+                    <CardMedia
+                      component="img"
+                      image={item.image}
+                      alt={item.name}
+                      title={item.name}
+                      height={120}
+                    />
+                  </Grid>
+                  <Grid item xs={7}>
+                    <CardContent
+                      component={Box}
+                      style={{ padding: 3, paddingLeft: 6, paddingRight: 6 }}
+                      display="flex"
+                      flexDirection="column"
+                    >
+                      <Typography
+                        style={{ fontWeight: "normal", fontSize: 18 }}
+                      >
+                        {item.name}
+                      </Typography>
+                      <Typography style={{ fontSize: 10, marginTop: 10 }}>
+                        {`${item.description.slice(1, 35)}...`}
+                      </Typography>
+                      <Typography style={{ fontSize: 14, marginTop: 13 }}>
+                        Rs. {item.price}
+                      </Typography>
+                    </CardContent>
+                  </Grid>
+                </Grid>
               </CardActionArea>
             </Card>
           </Grid>

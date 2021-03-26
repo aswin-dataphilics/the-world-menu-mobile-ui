@@ -11,6 +11,8 @@ import {
   FormGroup,
   Grid,
   Typography,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import {
   ArrowBack,
@@ -47,6 +49,23 @@ const FoodDetailsScreen = ({ history }) => {
         </Grid>
 
         <Grid item xs={12}>
+          <Box position="sticky" component="form">
+            <Select
+              variant="outlined"
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={"1"}
+              label="Age"
+              style={{ height: 40 }}
+              fullWidth
+            >
+              <MenuItem disabled selected>
+                {"Sub Catgory"}
+              </MenuItem>
+              <MenuItem>{"Soft Drink"}</MenuItem>
+              <MenuItem>{"Cold Drink"}</MenuItem>
+            </Select>
+          </Box>
           <Card>
             <CardContent
               component={Box}
