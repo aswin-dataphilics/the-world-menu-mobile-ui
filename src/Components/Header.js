@@ -9,6 +9,7 @@ import {
 import { ShoppingCart } from "@material-ui/icons";
 
 const Header = () => {
+  
   return (
     <AppBar color="default">
       <Toolbar>

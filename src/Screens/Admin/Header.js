@@ -1,8 +1,12 @@
 import React from "react";
 import { AppBar, Toolbar, Button, Typography, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   return (
     <AppBar color="default" position="relative" style={{ marginBottom: 30 }}>
       <Toolbar>
@@ -34,9 +38,11 @@ const Header = () => {
           >
             {"Food Items"}
           </Button>
-          <Button color="inherit" size="large" style={{ marginLeft: 4 }}>
-            {"Logout"}
-          </Button>
+          {userInfo && (
+            <Button color="inherit" size="large" style={{ marginLeft: 4 }}>
+              {`Logout, ${userInfo.name.split(" ")[0]}`}
+            </Button>
+          )}
         </Box>
       </Toolbar>
     </AppBar>
