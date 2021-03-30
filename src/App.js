@@ -7,6 +7,8 @@ import {
   createMuiTheme,
   CssBaseline,
 } from "@material-ui/core";
+import { Provider } from "react-redux";
+import store from "./Store";
 import Header from "./Components/Header";
 import SideNavBar from "./Components/SideNavBar";
 import MenuItemsScreen from "./Screens/MenuItemsScreen";
@@ -32,52 +34,54 @@ function App() {
     },
   });
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Switch>
-        <Route path="/login" component={LoginScreen} exact />
-        <Route path="/admin" component={AdminLoginScreen} exact />
-        <Route path="/admin/dashboard" component={AdminDashboardScreen} />
-        <Route
-          path="/admin/itemscategory"
-          component={AdminItemsCategoryScreen}
-          exact
-        />
-        <Route
-          path="/admin/itemscategory/add"
-          component={AdminAddItemsCategoryScreen}
-        />
-        <Route
-          path="/admin/fooditems"
-          component={AdminFoodItemsListScreen}
-          exact
-        />
-        <Route
-          path="/admin/fooditems/add"
-          component={AdminAddFoodItemsListScreen}
-        />
-        <Route>
-          <Header />
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              component={Box}
-              display="flex"
-              justifyContent="center"
-            >
-              <SideNavBar />
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Switch>
+          <Route path="/login" component={LoginScreen} exact />
+          <Route path="/admin/dashboard" component={AdminDashboardScreen} />
+          <Route
+            path="/admin/itemscategory"
+            component={AdminItemsCategoryScreen}
+            exact
+          />
+          <Route
+            path="/admin/itemscategory/add"
+            component={AdminAddItemsCategoryScreen}
+          />
+          <Route
+            path="/admin/fooditems"
+            component={AdminFoodItemsListScreen}
+            exact
+          />
+          <Route
+            path="/admin/fooditems/add"
+            component={AdminAddFoodItemsListScreen}
+          />
+          <Route path="/admin" component={AdminLoginScreen} exact />
+          <Route>
+            <Header />
+            <Grid container>
+              <Grid
+                item
+                xs={3}
+                component={Box}
+                display="flex"
+                justifyContent="center"
+              >
+                <SideNavBar />
+              </Grid>
+              <Grid item xs={9}>
+                <Switch>
+                  <Route path="/" component={MenuItemsScreen} exact />
+                  <Route path="/food" component={FoodDetailsScreen} />
+                </Switch>
+              </Grid>
             </Grid>
-            <Grid item xs={9}>
-              <Switch>
-                <Route path="/" component={MenuItemsScreen} exact />
-                <Route path="/food" component={FoodDetailsScreen} />
-              </Switch>
-            </Grid>
-          </Grid>
-        </Route>
-      </Switch>
-    </ThemeProvider>
+          </Route>
+        </Switch>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

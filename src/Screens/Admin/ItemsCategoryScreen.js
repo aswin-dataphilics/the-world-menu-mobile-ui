@@ -10,7 +10,7 @@ import {
   TableRow,
   TableHead,
   TableBody,
-  IconButton,
+  ButtonGroup,
 } from "@material-ui/core";
 import { Edit, Delete } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -51,19 +51,15 @@ const ItemsCategoryScreen = () => {
               <TableBody>
                 <TableRow hover>
                   <TableCell style={{ fontSize: 18 }}>Popular</TableCell>
-                  <TableCell>
-                    <Box display="flex" flexDirection="row">
-                      <IconButton
-                        color="inherit"
-                        style={{ marginLeft: "auto" }}
-                        arial-label="Edit"
-                      >
+                  <TableCell align="right">
+                    <ButtonGroup size="small">
+                      <Button variant="contained" color="primary">
                         <Edit />
-                      </IconButton>
-                      <IconButton color="inherit" arial-label="Remove">
+                      </Button>
+                      <Button variant="contained" color="secondary">
                         <Delete />
-                      </IconButton>
-                    </Box>
+                      </Button>
+                    </ButtonGroup>
                   </TableCell>
                 </TableRow>
               </TableBody>
