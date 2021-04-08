@@ -6,6 +6,7 @@ import {
   addMenuCategoryReducer,
   menuCategoriesReducer,
   deleteMenuCategoryReducer,
+  addMenuItemsReducer,
 } from "./reducers/menuItemsReducers";
 
 const reducers = combineReducers({
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   addMenuCategory: addMenuCategoryReducer,
   menuCategories: menuCategoriesReducer,
   deleteMenuCategory: deleteMenuCategoryReducer,
+  addMenuItems: addMenuItemsReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

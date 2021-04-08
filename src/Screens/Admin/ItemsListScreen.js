@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Grid,
@@ -22,8 +22,16 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import Header from "./Header";
+import { useDispatch } from "react-redux";
+import { ADD_MENU_ITEMS_RESET } from "../../constants/menuItemsConstants";
 
 const ItemsListScreen = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: ADD_MENU_ITEMS_RESET });
+  }, [dispatch]);
+
   return (
     <>
       <Header />

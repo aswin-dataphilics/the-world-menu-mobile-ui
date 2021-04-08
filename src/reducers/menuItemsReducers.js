@@ -10,6 +10,10 @@ import {
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_FAIL,
   DELETE_CATEGORY_RESET,
+  ADD_MENU_ITEMS_REQUEST,
+  ADD_MENU_ITEMS_SUCCESS,
+  ADD_MENU_ITEMS_FAIL,
+  ADD_MENU_ITEMS_RESET,
 } from "../constants/menuItemsConstants";
 
 export const addMenuCategoryReducer = (state = {}, action) => {
@@ -49,6 +53,21 @@ export const deleteMenuCategoryReducer = (state = {}, action) => {
     case DELETE_CATEGORY_FAIL:
       return { loading: false, error: action.payload };
     case DELETE_CATEGORY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const addMenuItemsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_MENU_ITEMS_REQUEST:
+      return { loading: true };
+    case ADD_MENU_ITEMS_SUCCESS:
+      return { loading: false, success: true };
+    case ADD_MENU_ITEMS_FAIL:
+      return { loading: false, error: action.payload };
+    case ADD_MENU_ITEMS_RESET:
       return {};
     default:
       return state;
