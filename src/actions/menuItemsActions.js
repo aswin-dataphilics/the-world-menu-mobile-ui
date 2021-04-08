@@ -3,6 +3,9 @@ import {
   ADD_CATEGORY_FAIL,
   ADD_CATEGORY_REQUEST,
   ADD_CATEGORY_SUCCESS,
+  DELETE_CATEGORY_FAIL,
+  DELETE_CATEGORY_REQUEST,
+  DELETE_CATEGORY_SUCCESS,
   GET_CATEGORY_FAIL,
   GET_CATEGORY_REQUEST,
   GET_CATEGORY_SUCCESS,
@@ -58,6 +61,34 @@ export const getMenuCategory = () => async (dispatch, getState) => {
     dispatch({
       type: GET_CATEGORY_FAIL,
       payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteCategory = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: DELETE_CATEGORY_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/menu/category/${id}/delete`, config);
+
+    dispatch({ type: DELETE_CATEGORY_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: DELETE_CATEGORY_FAIL,
+      error:
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,

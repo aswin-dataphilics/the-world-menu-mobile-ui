@@ -5,12 +5,14 @@ import { userLoginReducer } from "./reducers/userReducers";
 import {
   addMenuCategoryReducer,
   menuCategoriesReducer,
+  deleteMenuCategoryReducer,
 } from "./reducers/menuItemsReducers";
 
 const reducers = combineReducers({
   userLogin: userLoginReducer,
   addMenuCategory: addMenuCategoryReducer,
   menuCategories: menuCategoriesReducer,
+  deleteMenuCategory: deleteMenuCategoryReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
