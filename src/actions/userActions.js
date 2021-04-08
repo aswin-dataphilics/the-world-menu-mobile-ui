@@ -3,6 +3,7 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
+  USER_LOGOUT_SUCCESS,
 } from "../constants/userConstants";
 
 export const login = (user) => async (dispatch) => {
@@ -13,11 +14,7 @@ export const login = (user) => async (dispatch) => {
       "Content-Type": "application/json",
     };
 
-    const { data } = await axios.post(
-      "http://localhost:5000/api/users/login",
-      user,
-      config
-    );
+    const { data } = await axios.post("/api/users/login", user, config);
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
@@ -31,4 +28,10 @@ export const login = (user) => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+export const logout = () => async (dispatch) => {
+  localStorage.removeItem("userInfo");
+
+  dispatch({ type: USER_LOGOUT_SUCCESS });
 };

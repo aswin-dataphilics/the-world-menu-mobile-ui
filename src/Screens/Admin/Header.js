@@ -1,11 +1,19 @@
 import React from "react";
 import { AppBar, Toolbar, Button, Typography, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../actions/userActions";
 
-const Header = () => {
+const Header = ({ history }) => {
+  const dispatch = useDispatch();
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    // history.push("/login");
+    dispatch(logout());
+  };
 
   return (
     <AppBar color="default" position="relative" style={{ marginBottom: 30 }}>
@@ -39,7 +47,12 @@ const Header = () => {
             {"Food Items"}
           </Button>
           {userInfo && (
-            <Button color="inherit" size="large" style={{ marginLeft: 4 }}>
+            <Button
+              color="inherit"
+              size="large"
+              onClick={logoutHandler}
+              style={{ marginLeft: 4 }}
+            >
               {`Logout, ${userInfo.name.split(" ")[0]}`}
             </Button>
           )}
