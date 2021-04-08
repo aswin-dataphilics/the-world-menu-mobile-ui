@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Grid,
@@ -6,24 +6,33 @@ import {
   Button,
   TextField,
   Box,
-  Table,
-  TableCell,
-  TableRow,
-  TableHead,
-  TableBody,
-  IconButton,
-  makeStyles,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
+  CircularProgress,
 } from "@material-ui/core";
-import { Edit, Delete } from "@material-ui/icons";
 import Header from "./Header";
+import { useDispatch, useSelector } from "react-redux";
+import { createItemsCategory } from "../../actions/menuItemsActions";
 
-const useStyles = makeStyles((theme) => {});
+const AddCategoryScreen = ({ history }) => {
+  const [name, setName] = useState("");
+  const dispatch = useDispatch();
 
-const AddCategoryScreen = () => {
+  const addMenuCategory = useSelector((state) => state.addMenuCategory);
+  const { loading, success, error } = addMenuCategory;
+
+  useEffect(() => {
+    if (success) {
+      history.push("/admin/itemscategory");
+    }
+  }, [success]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(createItemsCategory({ name }));
+  };
   return (
     <>
       <Header />
@@ -33,7 +42,12 @@ const AddCategoryScreen = () => {
             <Typography variant="h4" color="default">
               {"Add New Category"}
             </Typography>
-            <Box component="form">
+            {error && (
+              <Typography paragraph color="secondary">
+                {error}
+              </Typography>
+            )}
+            <Box component="form" onSubmit={submitHandler}>
               <TextField
                 variant="outlined"
                 placeholder="Enter Name..."
@@ -41,6 +55,9 @@ const AddCategoryScreen = () => {
                 margin="normal"
                 type="text"
                 label="Category Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
                 fullWidth
               />
 
@@ -68,9 +85,17 @@ const AddCategoryScreen = () => {
                 variant="contained"
                 color="primary"
                 style={{ marginTop: 10 }}
+                type="submit"
                 fullWidth
               >
-                {"Save Category"}
+                {loading ? (
+                  <>
+                    <CircularProgress size={20} />
+                    &nbsp;{"Saving..."}
+                  </>
+                ) : (
+                  "Save Category"
+                )}
               </Button>
             </Box>
           </Grid>
