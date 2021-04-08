@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Grid,
@@ -15,8 +15,19 @@ import {
 import { Edit, Delete } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import Header from "./Header";
+import { useDispatch, useSelector } from "react-redux";
+import { getMenuCategory } from "../../actions/menuItemsActions";
 
 const ItemsCategoryScreen = () => {
+  const dispatch = useDispatch();
+
+  const menuCategories = useSelector((state) => state.menuCategories);
+  const { loading, categories, error } = menuCategories;
+
+  useEffect(() => {
+    dispatch(getMenuCategory());
+  }, [dispatch]);
+
   return (
     <>
       <Header />
@@ -49,19 +60,23 @@ const ItemsCategoryScreen = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow hover>
-                  <TableCell style={{ fontSize: 18 }}>Popular</TableCell>
-                  <TableCell align="right">
-                    <ButtonGroup size="small">
-                      <Button variant="contained" color="primary">
-                        <Edit />
-                      </Button>
-                      <Button variant="contained" color="secondary">
-                        <Delete />
-                      </Button>
-                    </ButtonGroup>
-                  </TableCell>
-                </TableRow>
+                {categories.map((category) => (
+                  <TableRow hover key={category._id}>
+                    <TableCell style={{ fontSize: 18 }}>
+                      {category.name}
+                    </TableCell>
+                    <TableCell align="right">
+                      <ButtonGroup size="small">
+                        <Button variant="contained" color="primary">
+                          <Edit />
+                        </Button>
+                        <Button variant="contained" color="secondary">
+                          <Delete />
+                        </Button>
+                      </ButtonGroup>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </Grid>

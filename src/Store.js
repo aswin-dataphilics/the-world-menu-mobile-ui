@@ -2,11 +2,15 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { userLoginReducer } from "./reducers/userReducers";
-import { addMenuCategoryReducer } from "./reducers/menuItemsReducers";
+import {
+  addMenuCategoryReducer,
+  menuCategoriesReducer,
+} from "./reducers/menuItemsReducers";
 
 const reducers = combineReducers({
   userLogin: userLoginReducer,
   addMenuCategory: addMenuCategoryReducer,
+  menuCategories: menuCategoriesReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
