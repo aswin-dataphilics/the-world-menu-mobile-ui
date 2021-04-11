@@ -13,7 +13,7 @@ import menuItems from "../MenuItems";
 
 const MenuItemsScreen = () => {
   return (
-    <Box pt={8} pr={1}>
+    <Box pt={13} pr={1}>
       <Grid container spacing={1}>
         {menuItems.map((item) => (
           <Grid item key={item._id}>

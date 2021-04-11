@@ -12,6 +12,9 @@ import {
   GET_CATEGORY_FAIL,
   GET_CATEGORY_REQUEST,
   GET_CATEGORY_SUCCESS,
+  GET_MENU_ITEMS_FAIL,
+  GET_MENU_ITEMS_REQUEST,
+  GET_MENU_ITEMS_SUCCESS,
 } from "../constants/menuItemsConstants";
 
 export const createItemsCategory = (category) => async (dispatch, getState) => {
@@ -120,6 +123,34 @@ export const createMenuItem = (item) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADD_MENU_ITEMS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getMenuItems = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_MENU_ITEMS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/menu/menuitems", config);
+
+    dispatch({ type: GET_MENU_ITEMS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_MENU_ITEMS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

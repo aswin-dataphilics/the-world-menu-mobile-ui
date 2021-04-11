@@ -14,6 +14,9 @@ import {
   ADD_MENU_ITEMS_SUCCESS,
   ADD_MENU_ITEMS_FAIL,
   ADD_MENU_ITEMS_RESET,
+  GET_MENU_ITEMS_REQUEST,
+  GET_MENU_ITEMS_SUCCESS,
+  GET_MENU_ITEMS_FAIL,
 } from "../constants/menuItemsConstants";
 
 export const addMenuCategoryReducer = (state = {}, action) => {
@@ -69,6 +72,19 @@ export const addMenuItemsReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ADD_MENU_ITEMS_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const menuItemsReducer = (state = { items: [] }, action) => {
+  switch (action.type) {
+    case GET_MENU_ITEMS_REQUEST:
+      return { ...state, loading: true };
+    case GET_MENU_ITEMS_SUCCESS:
+      return { loading: false, items: action.payload };
+    case GET_MENU_ITEMS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

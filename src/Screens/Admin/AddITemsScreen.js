@@ -26,6 +26,7 @@ const AddItemsSCreen = ({ history }) => {
   const [description, setDescription] = useState("");
   const [servings, setServings] = useState(0);
   const [cooktime, setCooktime] = useState(0);
+  const [type, setType] = useState(0); // 0 for veg, 1 for non-veg
   const [price, setPrice] = useState(0);
   const [energy, setEnergy] = useState(0);
   const [ingredients, setIngredients] = useState("");
@@ -61,6 +62,7 @@ const AddItemsSCreen = ({ history }) => {
         price,
         energy,
         ingredients,
+        type,
       })
     );
   };
@@ -110,6 +112,23 @@ const AddItemsSCreen = ({ history }) => {
                         {cat.name}
                       </MenuItem>
                     ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl variant="outlined" fullWidth margin="normal">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    required
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
+                    label="Type"
+                  >
+                    <MenuItem value={0}>{"Vegeterian"}</MenuItem>
+                    <MenuItem value={1}>{"Non-Vegeterian"}</MenuItem>
                   </Select>
                 </FormControl>
 

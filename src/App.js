@@ -62,7 +62,7 @@ function App() {
           <Route>
             <Header />
             <Grid container>
-              <Grid
+              {/* `<Grid
                 item
                 xs={3}
                 component={Box}
@@ -70,8 +70,8 @@ function App() {
                 justifyContent="center"
               >
                 <SideNavBar />
-              </Grid>
-              <Grid item xs={9}>
+              </Grid>` */}
+              <Grid item xs={12} style={{ marginLeft: 9 }}>
                 <Switch>
                   <Route path="/" component={MenuItemsScreen} exact />
                   <Route path="/food" component={FoodDetailsScreen} />

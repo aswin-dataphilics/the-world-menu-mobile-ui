@@ -57,10 +57,8 @@ const ItemsCategoryScreen = () => {
       <Header />
       <Container maxWidth="md">
         {deleteLoading && <Loader />}
-        {deleteError && <Typography color="error">{deleteError}</Typography>}
-        {deleteSuccess && (
-          <Typography color="secondary">{"Deleted..."}</Typography>
-        )}
+        {deleteError && <Typography variant="error">{deleteError}</Typography>}
+        {deleteSuccess && <Typography>{"Deleted..."}</Typography>}
         <Grid container>
           <Grid item xs={12} component={Box} display="flex" flexDirection="row">
             <Typography variant="h4" color="default">
