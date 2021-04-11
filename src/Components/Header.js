@@ -6,6 +6,7 @@ import {
   Toolbar,
   Typography,
   Button,
+  TextField,
 } from "@material-ui/core";
 import MenuItemsDrawer from "./MenuDrawer";
 import {
@@ -16,6 +17,7 @@ import {
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState(false);
 
   return (
     <AppBar
@@ -24,9 +26,16 @@ const Header = () => {
       display="flex"
       flexDirection="column"
     >
-      <Toolbar>
+      <Toolbar style={{ paddingLeft: 10, paddingRight: 10 }}>
         <Typography>{"FoodTech"}</Typography>
-        <IconButton component={Box} ml="auto" color="inherit" aria-label="Cart">
+        <IconButton
+          component={Box}
+          size="small"
+          ml="auto"
+          color="inherit"
+          aria-label="Cart"
+          style={{ marginLeft: "auto" }}
+        >
           <ShoppingCart />
         </IconButton>
         <MenuItemsDrawer open={open} onClose={() => setOpen(!open)} />
@@ -41,11 +50,33 @@ const Header = () => {
         >
           {"Menu"}
         </Button>
+        {search && (
+          <input
+            placeholder="Search..."
+            style={{
+              backgroundColor: "transparent",
+              color: "#fff",
+              borderRadius: 20,
+              marginLeft: "auto",
+              borderColor: "#eee",
+              borderWidth: 1,
+              paddingLeft: 10,
+              width: "100%",
+              marginLeft: 5,
+              marginRight: 5,
+            }}
+          />
+        )}
         <IconButton
-          style={{ marginLeft: "auto", marginRight: 5 }}
+          style={
+            !search
+              ? { marginLeft: "auto", marginRight: 5 }
+              : { marginRight: 5 }
+          }
           color="inherit"
           aria-label="Filter"
           size="small"
+          onClick={() => setSearch(!search)}
         >
           <SearchOutlined />
         </IconButton>
