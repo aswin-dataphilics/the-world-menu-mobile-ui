@@ -23,7 +23,7 @@ import AdminAddFoodItemsListScreen from "./Screens/Admin/AddITemsScreen";
 
 function App() {
   // eslint-disable-next-line
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
 
   const theme = createMuiTheme({
     palette: {
@@ -74,7 +74,7 @@ function App() {
               <Grid item xs={12} style={{ marginLeft: 9 }}>
                 <Switch>
                   <Route path="/" component={MenuItemsScreen} exact />
-                  <Route path="/food" component={FoodDetailsScreen} />
+                  <Route path="/food/:id" component={FoodDetailsScreen} />
                 </Switch>
               </Grid>
             </Grid>

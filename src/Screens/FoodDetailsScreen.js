@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -23,10 +23,22 @@ import {
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { grey } from "@material-ui/core/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { getMenuItem } from "../actions/menuItemsActions";
 
-const FoodDetailsScreen = ({ history }) => {
+const FoodDetailsScreen = ({ history, match }) => {
+  const itemId = match.params.id;
+  const dispatch = useDispatch();
+
+  const menuItem = useSelector((state) => state.menuItem);
+  const { loading, item, error } = menuItem;
+
+  useEffect(() => {
+    dispatch(getMenuItem(itemId));
+  }, [dispatch]);
+
   return (
-    <Box pt={8} pr={1}>
+    <Box pt={13} pr={1}>
       <Grid container spacing={1}>
         <Grid
           item
@@ -45,27 +57,10 @@ const FoodDetailsScreen = ({ history }) => {
             <ArrowBack />
           </Button>
 
-          <Typography style={{ marginLeft: 8 }}>ITEM NAME</Typography>
+          <Typography style={{ marginLeft: 8 }}>{item.name}</Typography>
         </Grid>
 
         <Grid item xs={12}>
-          <Box position="sticky" component="form">
-            <Select
-              variant="outlined"
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
-              value={"1"}
-              label="Age"
-              style={{ height: 40 }}
-              fullWidth
-            >
-              <MenuItem disabled selected>
-                {"Sub Catgory"}
-              </MenuItem>
-              <MenuItem>{"Soft Drink"}</MenuItem>
-              <MenuItem>{"Cold Drink"}</MenuItem>
-            </Select>
-          </Box>
           <Card>
             <CardContent
               component={Box}
@@ -84,9 +79,7 @@ const FoodDetailsScreen = ({ history }) => {
                 {"DESCRIPTION"}
               </Typography>
               <Typography style={{ fontSize: "0.7rem", textAlign: "justify" }}>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit
-                deserunt odit praesentium. Vero corrupti itaque officiis libero
-                porro alias eaque!
+                {item.description}
               </Typography>
             </CardContent>
           </Card>
@@ -106,7 +99,9 @@ const FoodDetailsScreen = ({ history }) => {
               >
                 SERVINGS
               </Typography>
-              <Typography style={{ fontSize: 12 }}>2 People</Typography>
+              <Typography style={{ fontSize: 12 }}>
+                {item.servings} People
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -125,7 +120,9 @@ const FoodDetailsScreen = ({ history }) => {
               >
                 COOK TIME
               </Typography>
-              <Typography style={{ fontSize: 12 }}>12 mins</Typography>
+              <Typography style={{ fontSize: 12 }}>
+                {item.cooktime} mins
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -144,7 +141,9 @@ const FoodDetailsScreen = ({ history }) => {
               >
                 ENERGY
               </Typography>
-              <Typography style={{ fontSize: 12 }}>227 kcal.</Typography>
+              <Typography style={{ fontSize: 12 }}>
+                {item.energy} kcal.
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -185,7 +184,7 @@ const FoodDetailsScreen = ({ history }) => {
               height={120}
             />
             <CardContent>
-              <Typography>ITEM NAME</Typography>
+              <Typography>{item.name}</Typography>
               <Box display="flex" flexDirection="row">
                 <Typography
                   style={{
@@ -193,7 +192,7 @@ const FoodDetailsScreen = ({ history }) => {
                     color: grey[500],
                   }}
                 >
-                  {"Descert"}
+                  {item.category.name}
                 </Typography>
                 <Typography
                   style={{
@@ -201,7 +200,7 @@ const FoodDetailsScreen = ({ history }) => {
                     marginLeft: "auto",
                   }}
                 >
-                  Rs. {"69.00"}
+                  Rs. {item.defaultPrice}
                 </Typography>
               </Box>
               <Typography

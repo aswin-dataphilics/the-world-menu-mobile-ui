@@ -8,6 +8,8 @@ import {
   deleteMenuCategoryReducer,
   addMenuItemsReducer,
   menuItemsReducer,
+  menuItemReducer,
+  allMenuCategoryReducer,
 } from "./reducers/menuItemsReducers";
 
 const reducers = combineReducers({
@@ -17,6 +19,8 @@ const reducers = combineReducers({
   deleteMenuCategory: deleteMenuCategoryReducer,
   addMenuItems: addMenuItemsReducer,
   menuItems: menuItemsReducer,
+  menuItem: menuItemReducer,
+  allMenuCategory: allMenuCategoryReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

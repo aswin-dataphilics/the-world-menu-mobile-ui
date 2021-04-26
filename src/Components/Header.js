@@ -6,7 +6,6 @@ import {
   Toolbar,
   Typography,
   Button,
-  TextField,
 } from "@material-ui/core";
 import MenuItemsDrawer from "./MenuDrawer";
 import {

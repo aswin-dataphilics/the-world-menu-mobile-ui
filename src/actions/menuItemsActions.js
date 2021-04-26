@@ -12,9 +12,15 @@ import {
   GET_CATEGORY_FAIL,
   GET_CATEGORY_REQUEST,
   GET_CATEGORY_SUCCESS,
+  GET_MENU_CATEGORY_FAIL,
+  GET_MENU_CATEGORY_REQUEST,
+  GET_MENU_CATEGORY_SUCCESS,
   GET_MENU_ITEMS_FAIL,
   GET_MENU_ITEMS_REQUEST,
   GET_MENU_ITEMS_SUCCESS,
+  GET_MENU_ITEM_FAIL,
+  GET_MENU_ITEM_REQUEST,
+  GET_MENU_ITEM_SUCCESS,
 } from "../constants/menuItemsConstants";
 
 export const createItemsCategory = (category) => async (dispatch, getState) => {
@@ -131,26 +137,52 @@ export const createMenuItem = (item) => async (dispatch, getState) => {
   }
 };
 
-export const getMenuItems = () => async (dispatch, getState) => {
+export const getMenuItems = () => async (dispatch) => {
   try {
     dispatch({ type: GET_MENU_ITEMS_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.get("/api/menu/menuitems", config);
+    const { data } = await axios.get("/api/menu/items");
 
     dispatch({ type: GET_MENU_ITEMS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: GET_MENU_ITEMS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getMenuItem = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_MENU_ITEM_REQUEST });
+
+    const { data } = await axios.get(`/api/menu/item/${id}`);
+
+    dispatch({ type: GET_MENU_ITEM_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_MENU_ITEM_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getCategory = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_MENU_CATEGORY_REQUEST });
+
+    const { data } = await axios.get("/api/menu/category");
+
+    dispatch({ type: GET_MENU_CATEGORY_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_MENU_CATEGORY_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

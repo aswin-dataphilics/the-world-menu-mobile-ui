@@ -17,6 +17,12 @@ import {
   GET_MENU_ITEMS_REQUEST,
   GET_MENU_ITEMS_SUCCESS,
   GET_MENU_ITEMS_FAIL,
+  GET_MENU_ITEM_REQUEST,
+  GET_MENU_ITEM_SUCCESS,
+  GET_MENU_ITEM_FAIL,
+  GET_MENU_CATEGORY_REQUEST,
+  GET_MENU_CATEGORY_SUCCESS,
+  GET_MENU_CATEGORY_FAIL,
 } from "../constants/menuItemsConstants";
 
 export const addMenuCategoryReducer = (state = {}, action) => {
@@ -84,6 +90,32 @@ export const menuItemsReducer = (state = { items: [] }, action) => {
     case GET_MENU_ITEMS_SUCCESS:
       return { loading: false, items: action.payload };
     case GET_MENU_ITEMS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const menuItemReducer = (state = { item: { category: {} } }, action) => {
+  switch (action.type) {
+    case GET_MENU_ITEM_REQUEST:
+      return { ...state, loading: true };
+    case GET_MENU_ITEM_SUCCESS:
+      return { loading: false, item: action.payload };
+    case GET_MENU_ITEM_FAIL:
+      return { loading: true, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const allMenuCategoryReducer = (state = { category: [] }, action) => {
+  switch (action.type) {
+    case GET_MENU_CATEGORY_REQUEST:
+      return { ...state, loading: true };
+    case GET_MENU_CATEGORY_SUCCESS:
+      return { loading: false, category: action.payload };
+    case GET_MENU_CATEGORY_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
