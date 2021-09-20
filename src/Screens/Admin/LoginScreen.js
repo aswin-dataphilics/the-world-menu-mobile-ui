@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../actions/userActions";
 import Loader from "../../Components/Loder";
 
-const LoginScreen = ({ history }) => {
+const AdminLoginScreen = ({ history }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -82,4 +82,4 @@ const LoginScreen = ({ history }) => {
   );
 };
 
-export default LoginScreen;
+export default AdminLoginScreen;

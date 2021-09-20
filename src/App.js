@@ -73,7 +73,7 @@ function App() {
               </Grid>` */}
               <Grid item xs={12} style={{ marginLeft: 9 }}>
                 <Switch>
-                  <Route path="/" component={MenuItemsScreen} exact />
+                  <Route path="/:outletId" component={MenuItemsScreen} exact />
                   <Route path="/food/:id" component={FoodDetailsScreen} />
                 </Switch>
               </Grid>

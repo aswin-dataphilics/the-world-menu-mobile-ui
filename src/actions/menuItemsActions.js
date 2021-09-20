@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
 import {
   ADD_CATEGORY_FAIL,
   ADD_CATEGORY_REQUEST,
@@ -12,9 +13,9 @@ import {
   GET_CATEGORY_FAIL,
   GET_CATEGORY_REQUEST,
   GET_CATEGORY_SUCCESS,
-  GET_MENU_CATEGORY_FAIL,
-  GET_MENU_CATEGORY_REQUEST,
-  GET_MENU_CATEGORY_SUCCESS,
+  GET_MENU_SECTION_FAIL,
+  GET_MENU_SECTION_REQUEST,
+  GET_MENU_SECTION_SUCCESS,
   GET_MENU_ITEMS_FAIL,
   GET_MENU_ITEMS_REQUEST,
   GET_MENU_ITEMS_SUCCESS,
@@ -56,18 +57,27 @@ export const getMenuCategory = () => async (dispatch, getState) => {
   try {
     dispatch({ type: GET_CATEGORY_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
+    const userInfo = localStorage.getItem("userInfo");
+    console.log(userInfo);
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.get("/api/menu/category", config);
+    // const { data } = await axios.get("/api/menu/category", config);
 
+    const { data } = await axios.post(
+      "/api/restro/menu/category/get",
+      {
+        mstype: "6102267351c26a0004fb37d2",
+        menuSection: "611b71fe463a110004339942",
+      },
+      config
+    );
     dispatch({ type: GET_CATEGORY_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -137,13 +147,19 @@ export const createMenuItem = (item) => async (dispatch, getState) => {
   }
 };
 
-export const getMenuItems = () => async (dispatch) => {
+export const getMenuItems = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_MENU_ITEMS_REQUEST });
-
-    const { data } = await axios.get("/api/menu/items");
-
-    dispatch({ type: GET_MENU_ITEMS_SUCCESS, payload: data });
+    const config = {
+      "Content-Type": "application/json",
+    };
+    const { data } = await axios.post(
+      `/api/mobileui/items`,
+      { outletId: id },
+      config
+    );
+    let items = data.data;
+    dispatch({ type: GET_MENU_ITEMS_SUCCESS, payload: { items, id } });
   } catch (error) {
     dispatch({
       type: GET_MENU_ITEMS_FAIL,
@@ -173,16 +189,22 @@ export const getMenuItem = (id) => async (dispatch) => {
   }
 };
 
-export const getCategory = () => async (dispatch) => {
+export const getMenuSections = (id) => async (dispatch, getState) => {
   try {
-    dispatch({ type: GET_MENU_CATEGORY_REQUEST });
-
-    const { data } = await axios.get("/api/menu/category");
-
-    dispatch({ type: GET_MENU_CATEGORY_SUCCESS, payload: data });
+    dispatch({ type: GET_MENU_SECTION_REQUEST });
+    const config = {
+      "Content-Type": "application/json",
+    };
+    const { data } = await axios.post(
+      `/api/mobileui/menu/sections`,
+      { outletId: id },
+      config
+    );
+    console.log(data);
+    dispatch({ type: GET_MENU_SECTION_SUCCESS, payload: data.data });
   } catch (error) {
     dispatch({
-      type: GET_MENU_CATEGORY_FAIL,
+      type: GET_MENU_SECTION_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

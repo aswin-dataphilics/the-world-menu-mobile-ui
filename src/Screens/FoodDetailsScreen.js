@@ -31,8 +31,17 @@ const FoodDetailsScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const menuItem = useSelector((state) => state.menuItem);
-  const { loading, item, error } = menuItem;
-
+  //const { loading, item, error } = menuItem;
+  const item = {
+    name: "juice",
+    description:"lime juice",
+    servings:"static data",
+    cooktime:"12",
+    energy:'good energy',
+    category:{
+      name:'category name'
+    }
+  };
   useEffect(() => {
     dispatch(getMenuItem(itemId));
   }, [dispatch]);

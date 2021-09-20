@@ -15,7 +15,6 @@ export const login = (user) => async (dispatch) => {
     };
 
     const { data } = await axios.post("/api/users/login", user, config);
-
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
     localStorage.setItem("userInfo", JSON.stringify(data));

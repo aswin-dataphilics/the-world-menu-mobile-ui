@@ -13,7 +13,8 @@ import {
   ShoppingCart,
   SearchOutlined,
 } from "@material-ui/icons";
-
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState(false);
@@ -26,7 +27,7 @@ const Header = () => {
       flexDirection="column"
     >
       <Toolbar style={{ paddingLeft: 10, paddingRight: 10 }}>
-        <Typography>{"FoodTech"}</Typography>
+        <Typography>{"Delhi-branch"}</Typography>
         <IconButton
           component={Box}
           size="small"
@@ -35,7 +36,7 @@ const Header = () => {
           aria-label="Cart"
           style={{ marginLeft: "auto" }}
         >
-          <ShoppingCart />
+          {/* <ShoppingCart /> */}
         </IconButton>
         <MenuItemsDrawer open={open} onClose={() => setOpen(!open)} />
       </Toolbar>
@@ -80,7 +81,7 @@ const Header = () => {
           <SearchOutlined />
         </IconButton>
         <IconButton color="inherit" aria-label="Filter" size="small">
-          <SettingsApplications />
+          <FavoriteBorderIcon />
         </IconButton>
       </Box>
     </AppBar>
