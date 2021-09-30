@@ -161,7 +161,7 @@ export const getMenuItems = (id, msId) => async (dispatch) => {
       "Content-Type": "application/json",
     };
     const { data } = await axios.post(
-      `/api/mobileui/items`,
+      `https://prashant-api.herokuapp.com/api/mobileui/items`,
       { outletId: id, menuSection: msId },
       config
     );
@@ -194,7 +194,7 @@ export const getMenuItem = (id) => async (dispatch, getState) => {
       "Content-Type": "application/json",
     };
     const { data } = await axios.post(
-      `/api/mobileui/item/details`,
+      `https://prashant-api.herokuapp.com/api/mobileui/item/details`,
       body,
       config
     );
@@ -218,7 +218,7 @@ export const getMsType = (outletId) => async (dispatch) => {
       "Content-Type": "application/json",
     };
     const { data } = await axios.post(
-      `/api/mobileui/mstype`,
+      `https://prashant-api.herokuapp.com/api/mobileui/mstype`,
       { outletId },
       config
     );
@@ -241,7 +241,7 @@ export const getMenuSections = (mstype, outletId) => async (dispatch) => {
       "Content-Type": "application/json",
     };
     const { data } = await axios.post(
-      "/api/mobileui/menu/sections",
+      "https://prashant-api.herokuapp.com/api/mobileui/menu/sections",
       { outletId, mstype },
       config
     );
@@ -266,7 +266,7 @@ export const getOutlets = (brand) => async (dispatch) => {
       "Content-Type": "application/json",
     };
     const { data } = await axios.post(
-      "/api/mobileui/outlets/get",
+      "https://prashant-api.herokuapp.com/api/mobileui/outlets/get",
       { brand },
       config
     );
@@ -293,7 +293,7 @@ export const getMenuBar = () => async (dispatch) => {
       "Content-Type": "application/json",
     };
     const { data } = await axios.post(
-      "/api/mobileui/menu/category",
+      "https://prashant-api.herokuapp.com/api/mobileui/menu/category",
       body,
       config
     );
