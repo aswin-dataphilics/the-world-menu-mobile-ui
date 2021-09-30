@@ -13,12 +13,13 @@ import {
   ShoppingCart,
   SearchOutlined,
 } from "@material-ui/icons";
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { useSelector } from "react-redux";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState(false);
-
+  const { items:{outlet} } = useSelector((state) => state.menuItems);
   return (
     <AppBar
       color="default"
@@ -27,7 +28,7 @@ const Header = () => {
       flexDirection="column"
     >
       <Toolbar style={{ paddingLeft: 10, paddingRight: 10 }}>
-        <Typography>{"Delhi-branch"}</Typography>
+        <Typography>{localStorage.getItem('branch')}</Typography>
         <IconButton
           component={Box}
           size="small"

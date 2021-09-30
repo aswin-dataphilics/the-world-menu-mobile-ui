@@ -23,6 +23,15 @@ import {
   GET_MENU_SECTION_REQUEST,
   GET_MENU_SECTION_SUCCESS,
   GET_MENU_SECTION_FAIL,
+  GET_OUTLETS_REQUEST,
+  GET_OUTLETS_FAIL,
+  GET_OUTLETS_SUCCESS,
+  GET_MSTYPE_REQUEST,
+  GET_MSTYPE_FAIL,
+  GET_MSTYPE_SUCCESS,
+  GET_MENU_BAR_REQUEST,
+  GET_MENU_BAR_SUCCESS,
+  GET_MENU_BAR_FAIL,
 } from "../constants/menuItemsConstants";
 
 export const addMenuCategoryReducer = (state = {}, action) => {
@@ -68,16 +77,14 @@ export const deleteMenuCategoryReducer = (state = {}, action) => {
   }
 };
 
-export const addMenuItemsReducer = (state = {}, action) => {
+export const allMenuSectionReducer = (state = { menusections: [] }, action) => {
   switch (action.type) {
-    case ADD_MENU_ITEMS_REQUEST:
+    case GET_MENU_SECTION_REQUEST:
       return { loading: true };
-    case ADD_MENU_ITEMS_SUCCESS:
-      return { loading: false, success: true };
-    case ADD_MENU_ITEMS_FAIL:
+    case GET_MENU_SECTION_SUCCESS:
+      return { loading: false, menusections: action.payload };
+    case GET_MENU_SECTION_FAIL:
       return { loading: false, error: action.payload };
-    case ADD_MENU_ITEMS_RESET:
-      return {};
     default:
       return state;
   }
@@ -88,7 +95,7 @@ export const menuItemsReducer = (state = { items: [] }, action) => {
     case GET_MENU_ITEMS_REQUEST:
       return { ...state, loading: true };
     case GET_MENU_ITEMS_SUCCESS:
-      return { loading: false, items: action.payload };
+      return { loading: false, items: action.payload.items };
     case GET_MENU_ITEMS_FAIL:
       return { loading: false, error: action.payload };
     default:
@@ -96,7 +103,7 @@ export const menuItemsReducer = (state = { items: [] }, action) => {
   }
 };
 
-export const menuItemReducer = (state = { item: { category: {} } }, action) => {
+export const menuItemReducer = (state = { item: {} }, action) => {
   switch (action.type) {
     case GET_MENU_ITEM_REQUEST:
       return { ...state, loading: true };
@@ -109,18 +116,44 @@ export const menuItemReducer = (state = { item: { category: {} } }, action) => {
   }
 };
 
-export const allMenuCategoryReducer = (state = { menusections: [] }, action) => {
+export const allMsTypeReducer = (state = { mstype: [] }, action) => {
   switch (action.type) {
-    case GET_MENU_SECTION_REQUEST:
+    case GET_MSTYPE_REQUEST:
       return { ...state, loading: true };
-    case GET_MENU_SECTION_SUCCESS:
+    case GET_MSTYPE_SUCCESS:
       return {
         loading: false,
-        menusections: action.payload,
+        mstype: action.payload,
         id: action.payload.id,
       };
-    case GET_MENU_SECTION_FAIL:
+    case GET_MSTYPE_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const allOutletsReducer = (state = { outlets: [] }, action) => {
+  switch (action.type) {
+    case GET_OUTLETS_REQUEST:
+      return { loading: true, ...state };
+    case GET_OUTLETS_SUCCESS:
+      return { loading: false, outlets: action.payload };
+    case GET_OUTLETS_FAIL:
+      return { error: action.payload, loading: false };
+    default:
+      return state;
+  }
+};
+
+export const getMenuBarReducer = (state = { category: [] }, action) => {
+  switch (action.type) {
+    case GET_MENU_BAR_REQUEST:
+      return { loading: true, ...state };
+    case GET_MENU_BAR_SUCCESS:
+      return { loading: false, category: action.payload };
+    case GET_MENU_BAR_FAIL:
+      return { error: action.payload, loading: false };
     default:
       return state;
   }

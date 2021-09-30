@@ -15,22 +15,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMenuItems } from "../actions/menuItemsActions";
 import { Fragment } from "react";
 import Loader from "../Components/Loder";
+//import "./style.css";
 const MenuItemsScreen = ({ match }) => {
+  let menusectionId = match.params.menusectionId;
+  const outletId = match.params.outletId;
+  const brandId = match.params.brandId;
+  const msTypeId = match.params.msTypeId;
   const dispatch = useDispatch();
-  const id = match.params.outletId;
-  localStorage.setItem("outletId", id);
-  let data = [];
-  const menuItems = useSelector((state) => state.menuItems);
-
-  const { loading, error, items } = menuItems;
-  console.log(items.items);
-  // let loading = false;
-  // let error = false;
-  // let items = [{ _id: 1, name: "test", description: "test", price: 10 }];
+  const { loading, error, items } = useSelector((state) => state.menuItems);
 
   useEffect(() => {
-    dispatch(getMenuItems(id));
-  }, [dispatch]);
+    dispatch(getMenuItems(outletId, msTypeId));
+  }, [getMenuItems]);
 
   return (
     <Box pt={13} pr={1}>
@@ -39,57 +35,34 @@ const MenuItemsScreen = ({ match }) => {
           <Loader />
         ) : (
           <Fragment>
-            {items.items !== null && items.items !== undefined ? (
+            {items !== null && items !== undefined && items.length > 0 ? (
               <Fragment>
                 {" "}
-                {items.items.map((item) => (
-                  <Grid item key={item._id}>
-                    <Card>
-                      <CardActionArea component={Link} to={`/food/${item._id}`}>
+                {items.map((item) => (
+                  <Grid item key={item._id} xs={12}>
+                    <Card
+                      onClick={() => {
+                        localStorage.setItem("item", JSON.stringify(item));
+                      }}
+                    >
+                      <CardActionArea
+                        component={Link}
+                        to={`/${brandId}/${outletId}/${menusectionId}/${msTypeId}/${item._id}`}
+                      >
                         <Grid container>
                           <Grid item xs={5}>
-                            {/* <div style={{width:'200px',height:'100px'}}>
-                              <img
-                              width='100%'
-                            //  style={{objectFit:'none'}}
-                                src={
-                                  item.image === ""
-                                    ? `/images/nodles.jpg`
-                                    : `${item.image}`
-                                }
-                                alt=""
-                              />
-                            </div> */}
-
-                            <CardImg
-                              top
-                              width="100%"
-                              style={{objectFit:'cover'}}
-                             // height="200px"
-                              src={
-                                item.image === ""
-                                  ? `/images/nodles.jpg`
-                                  : `${item.image}`
-                              }
-                            />
-
-                              
-
-                            {/* <CardMedia
+                            <CardMedia
                               component="img"
                               image={
-                                item.image === ""
+                                item.image === "path"
                                   ? `/images/nodles.jpg`
                                   : `${item.image}`
                               }
-                              // image={`https://prashant-api.herokuapp.com/${item.image}`}
                               alt={item.name}
                               title={item.name}
-                              //height='150px'
+                              height={120}
                               width="100%"
-                            /> */}
-                            {/* <img src={item.image===''?`/images/nodles.jpg`:`${item.image}`} alt="no img" />
-                            </CardMedia> */}
+                            />
                           </Grid>
                           <Grid item xs={7}>
                             <CardContent
@@ -103,28 +76,46 @@ const MenuItemsScreen = ({ match }) => {
                               flexDirection="column"
                             >
                               <Typography
-                                style={{ fontWeight: "bold", fontSize: 18 }}
+                                style={{ fontWeight: "normal", fontSize: 18 }}
                               >
                                 {item.name}
-                                <div style={{ float: "right" }}>
-                                  <img
-                                    src={"/images/vegiterian.png"}
-                                    style={{ width: "15px", height: "15px" }}
-                                  />
-                                  {/* <img src={'/images/non-veg.png'} style={{width:'15px',height:'15px'}}/>
-                        <img src={'/images/eggiterian.png'} style={{width:'15px',height:'15px'}}/> */}
-                                </div>
+                                {"  "}[{`${item.health_options.slice(0, 1)}...`}
+                                ]
+                                <img
+                                  src={`/images/${item.food_type}.png`}
+                                  alt=""
+                                  style={{
+                                    height: "15px",
+                                    width: "15px",
+                                    float: "right",
+                                  }}
+                                />
                               </Typography>
                               <Typography
                                 style={{ fontSize: 10, marginTop: 10 }}
                               >
-                                {/* {`${item.description.slice(1, 35)}...`} */}
-                                {item.description}
+                                {`${item.desctiption.slice(0, 35)}...`}
                               </Typography>
                               <Typography
                                 style={{ fontSize: 14, marginTop: 13 }}
                               >
+                                <br />
+                              </Typography>
+                              <Typography
+                                style={{ fontSize: 15, marginTop: 10 }}
+                              >
                                 {item.price}
+                                {item.addons.length > 0 && (
+                                  <a
+                                    href=""
+                                    style={{
+                                      float: "right",
+                                      textDecoration: "none",
+                                    }}
+                                  >
+                                    Add
+                                  </a>
+                                )}
                               </Typography>
                             </CardContent>
                           </Grid>
@@ -132,7 +123,7 @@ const MenuItemsScreen = ({ match }) => {
                       </CardActionArea>
                     </Card>
                   </Grid>
-                ))}{" "}
+                ))}
               </Fragment>
             ) : (
               <h1>No items</h1>
@@ -143,5 +134,23 @@ const MenuItemsScreen = ({ match }) => {
     </Box>
   );
 };
-
+{
+  /* <div class="card">
+                      <img
+                       // src={item.image==''?`/images/nodles.jpg`:`${item.image}`}
+                        src="https://codingyaar.com/wp-content/uploads/bootstrap-4-card-image-left-demo-image.jpg" class="card-img-top" 
+                        className="card-img-top"
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">{item.name}</h5>
+                        <img src='/images/veg-img.png' style={{width:'15px',height:'15px', float:'right',marginTop:'-28px',marginRight: '-14px'}} alt='img'/>
+                        <p className="card-text">
+                        {`${item.desctiption.slice(1, 35)}...`}
+                        </p>
+                        <p className="card-text">
+                        {item.price}
+                        </p>
+                      </div>
+                    </div> */
+}
 export default MenuItemsScreen;

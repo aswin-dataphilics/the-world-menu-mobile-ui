@@ -3,24 +3,26 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { userLoginReducer } from "./reducers/userReducers";
 import {
-  addMenuCategoryReducer,
+  allMenuSectionReducer,
   menuCategoriesReducer,
   deleteMenuCategoryReducer,
-  addMenuItemsReducer,
   menuItemsReducer,
   menuItemReducer,
-  allMenuCategoryReducer,
+  allMsTypeReducer,
+  allOutletsReducer,
+  getMenuBarReducer,
 } from "./reducers/menuItemsReducers";
 
 const reducers = combineReducers({
   userLogin: userLoginReducer,
-  addMenuCategory: addMenuCategoryReducer,
+  outlets: allOutletsReducer,
+  allMenusections: allMenuSectionReducer,
   menuCategories: menuCategoriesReducer,
   deleteMenuCategory: deleteMenuCategoryReducer,
-  addMenuItems: addMenuItemsReducer,
   menuItems: menuItemsReducer,
   menuItem: menuItemReducer,
-  allMenuCategory: allMenuCategoryReducer,
+  allMsType : allMsTypeReducer,
+  allMenuBar:getMenuBarReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

@@ -20,6 +20,9 @@ import AdminItemsCategoryScreen from "./Screens/Admin/ItemsCategoryScreen";
 import AdminAddItemsCategoryScreen from "./Screens/Admin/AddCategoryScreen";
 import AdminFoodItemsListScreen from "./Screens/Admin/ItemsListScreen";
 import AdminAddFoodItemsListScreen from "./Screens/Admin/AddITemsScreen";
+import DisplayOutlets from "./Screens/DisplayOutlets";
+import DisplayMenuSectionTypes from "./Screens/DisplayMenuSectionTypes";
+import DisplayMenuSections from "./Screens/DisplayMenuSections";
 
 function App() {
   // eslint-disable-next-line
@@ -36,33 +39,45 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Switch>
-          <Route path="/login" component={LoginScreen} exact />
-          <Route path="/admin/dashboard" component={AdminDashboardScreen} />
-          <Route
-            path="/admin/itemscategory"
-            component={AdminItemsCategoryScreen}
-            exact
-          />
-          <Route
-            path="/admin/itemscategory/add"
-            component={AdminAddItemsCategoryScreen}
-          />
-          <Route
-            path="/admin/fooditems"
-            component={AdminFoodItemsListScreen}
-            exact
-          />
-          <Route
-            path="/admin/fooditems/add"
-            component={AdminAddFoodItemsListScreen}
-          />
-          <Route path="/admin" component={AdminLoginScreen} exact />
-          <Route>
-            <Header />
-            <Grid container>
-              {/* `<Grid
+        <Grid xs={12} md={12} lg={12}>
+          <Switch>
+            <Route path="/login" component={LoginScreen} exact />
+            <Route path="/admin/dashboard" component={AdminDashboardScreen} />
+            <Route
+              path="/admin/itemscategory"
+              component={AdminItemsCategoryScreen}
+              exact
+            />
+            <Route
+              path="/admin/itemscategory/add"
+              component={AdminAddItemsCategoryScreen}
+            />
+            <Route
+              path="/admin/fooditems"
+              component={AdminFoodItemsListScreen}
+              exact
+            />
+            <Route
+              path="/admin/fooditems/add"
+              component={AdminAddFoodItemsListScreen}
+            />
+            <Route path="/admin" component={AdminLoginScreen} exact />
+            <Route path="/:brandId" component={DisplayOutlets} exact />
+            <Route
+              path="/:brandId/:outletId"
+              component={DisplayMenuSectionTypes}
+              exact
+            />
+            <Route
+              path="/:brandId/:outletId/:menusectionId"
+              component={DisplayMenuSections}
+              exact
+            />
+
+            <Route>
+              <Header />
+              <Grid container xs={12} md={12} lg={12} >
+                {/* `<Grid
                 item
                 xs={3}
                 component={Box}
@@ -71,15 +86,26 @@ function App() {
               >
                 <SideNavBar />
               </Grid>` */}
-              <Grid item xs={12} style={{ marginLeft: 9 }}>
-                <Switch>
-                  <Route path="/:outletId" component={MenuItemsScreen} exact />
-                  <Route path="/food/:id" component={FoodDetailsScreen} />
-                </Switch>
+                <Grid item xs={12} md={12} lg={12} style={{ marginLeft: 9 }}>
+                  <Switch>
+                    <Route
+                      path="/:brandId/:outletId/:menusectionId/:msTypeId"
+                      component={MenuItemsScreen}
+                      exact
+                    />
+                    {/* <Route path="/:outletId" component={MenuItemsScreen} exact /> */}
+                    <Route
+                      path="/:brandId/:outletId/:menusectionId/:msTypeId/:itemId"
+                      component={FoodDetailsScreen}
+                      exact
+                    />
+                  </Switch>
+                </Grid>
               </Grid>
-            </Grid>
-          </Route>
-        </Switch>
+            </Route>
+          </Switch>
+        </Grid>
+        <CssBaseline />
       </ThemeProvider>
     </Provider>
   );

@@ -22,6 +22,14 @@ import {
   GET_MENU_ITEM_FAIL,
   GET_MENU_ITEM_REQUEST,
   GET_MENU_ITEM_SUCCESS,
+  GET_OUTLETS_FAIL,
+  GET_OUTLETS_REQUEST,
+  GET_OUTLETS_SUCCESS,
+  GET_MSTYPE_REQUEST,
+  GET_MSTYPE_SUCCESS,
+  GET_MSTYPE_FAIL,
+  GET_MENU_BAR_REQUEST,
+  GET_MENU_BAR_SUCCESS,
 } from "../constants/menuItemsConstants";
 
 export const createItemsCategory = (category) => async (dispatch, getState) => {
@@ -61,7 +69,6 @@ export const getMenuCategory = () => async (dispatch, getState) => {
     //   userLogin: { userInfo },
     // } = getState();
     const userInfo = localStorage.getItem("userInfo");
-    console.log(userInfo);
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
@@ -147,7 +154,7 @@ export const createMenuItem = (item) => async (dispatch, getState) => {
   }
 };
 
-export const getMenuItems = (id) => async (dispatch) => {
+export const getMenuItems = (id, msId) => async (dispatch) => {
   try {
     dispatch({ type: GET_MENU_ITEMS_REQUEST });
     const config = {
@@ -155,11 +162,14 @@ export const getMenuItems = (id) => async (dispatch) => {
     };
     const { data } = await axios.post(
       `/api/mobileui/items`,
-      { outletId: id },
+      { outletId: id, menuSection: msId },
       config
     );
-    let items = data.data;
-    dispatch({ type: GET_MENU_ITEMS_SUCCESS, payload: { items, id } });
+    console.log(data);
+    dispatch({
+      type: GET_MENU_ITEMS_SUCCESS,
+      payload: { items: data.data },
+    });
   } catch (error) {
     dispatch({
       type: GET_MENU_ITEMS_FAIL,
@@ -171,13 +181,25 @@ export const getMenuItems = (id) => async (dispatch) => {
   }
 };
 
-export const getMenuItem = (id) => async (dispatch) => {
+export const getMenuItem = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: GET_MENU_ITEM_REQUEST });
-
-    const { data } = await axios.get(`/api/menu/item/${id}`);
-
-    dispatch({ type: GET_MENU_ITEM_SUCCESS, payload: data });
+    var item = JSON.parse(localStorage.getItem("item"));
+    const body = {
+      catid: item.categoryid,
+      subcatid: item.subcatid ? item.subcatid : undefined,
+      itemid: item._id,
+    };
+    const config = {
+      "Content-Type": "application/json",
+    };
+    const { data } = await axios.post(
+      `/api/mobileui/item/details`,
+      body,
+      config
+    );
+    console.log(data);
+    dispatch({ type: GET_MENU_ITEM_SUCCESS, payload: data.data });
   } catch (error) {
     dispatch({
       type: GET_MENU_ITEM_FAIL,
@@ -189,22 +211,96 @@ export const getMenuItem = (id) => async (dispatch) => {
   }
 };
 
-export const getMenuSections = (id) => async (dispatch, getState) => {
+export const getMsType = (outletId) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_MSTYPE_REQUEST });
+    const config = {
+      "Content-Type": "application/json",
+    };
+    const { data } = await axios.post(
+      `/api/mobileui/mstype`,
+      { outletId },
+      config
+    );
+    dispatch({ type: GET_MSTYPE_SUCCESS, payload: data.data });
+  } catch (error) {
+    dispatch({
+      type: GET_MSTYPE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getMenuSections = (mstype, outletId) => async (dispatch) => {
   try {
     dispatch({ type: GET_MENU_SECTION_REQUEST });
     const config = {
       "Content-Type": "application/json",
     };
     const { data } = await axios.post(
-      `/api/mobileui/menu/sections`,
-      { outletId: id },
+      "/api/mobileui/menu/sections",
+      { outletId, mstype },
       config
     );
-    console.log(data);
-    dispatch({ type: GET_MENU_SECTION_SUCCESS, payload: data.data });
+    let arr = [];
+    data.data.map((d) => arr.push(d));
+    dispatch({ type: GET_MENU_SECTION_SUCCESS, payload: arr });
   } catch (error) {
     dispatch({
       type: GET_MENU_SECTION_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getOutlets = (brand) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_OUTLETS_REQUEST });
+    const config = {
+      "Content-Type": "application/json",
+    };
+    const { data } = await axios.post(
+      "/api/mobileui/outlets/get",
+      { brand },
+      config
+    );
+    dispatch({ type: GET_OUTLETS_SUCCESS, payload: data.data });
+  } catch (error) {
+    dispatch({
+      type: GET_OUTLETS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getMenuBar = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_MENU_BAR_REQUEST });
+    const body = {
+      outletId: localStorage.getItem("menuSection"),
+      menuSection: localStorage.getItem("menuSection"),
+    };
+    const config = {
+      "Content-Type": "application/json",
+    };
+    const { data } = await axios.post(
+      "/api/mobileui/menu/category",
+      body,
+      config
+    );
+    dispatch({ type: GET_MENU_BAR_SUCCESS, payload: data.data });
+  } catch (error) {
+    dispatch({
+      type: GET_MENU_BAR_REQUEST,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

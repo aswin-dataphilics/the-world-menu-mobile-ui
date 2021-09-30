@@ -6,13 +6,23 @@ import {
   Typography,
   SwipeableDrawer,
   ListItemText,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Divider,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { getMenuSections } from "../actions/menuItemsActions";
+import { getMenuBar, getMenuSections } from "../actions/menuItemsActions";
 import Loader from "./Loder";
 import { Fragment } from "react";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import {
+  ExitToAppOutlined,
+  ExpandLess,
+  ExpandLessOutlined,
+  ExpandMore,
+} from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import Loder from "./Loder";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -27,25 +37,43 @@ const useStyles = makeStyles((theme) => ({
 const MenuItemsDrawer = ({ open, onClose }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-
+  const [current, setCurrent] = useState(-1);
+  const changeState = (panel) => (e, newValue) => {
+    setCurrent(newValue ? panel : -1);
+  };
+  const { loading, category } = useSelector((state) => state.allMenuBar);
   const [opensub, setOpenSub] = useState(false);
-
-  const allMenuCategory = useSelector((state) => state.allMenuCategory);
-  // const { loading, category, error } = allMenuCategory;
-  const { loading, error,menusections } = allMenuCategory;
   useEffect(() => {
-    let id = localStorage.getItem('outletId')
-    dispatch(getMenuSections(id)); // getting all menusections in the outlet
-  }, [dispatch]);
-  const topOfList = React.createRef();
+    dispatch(getMenuBar());
+  }, [getMenuBar]);
+
   return (
     <SwipeableDrawer
-      anchor="bottom"
+      anchor="left"
       open={open}
       onOpen={onClose}
       onClose={onClose}
       style={{ height: "50vh", width: "100vh" }}
     >
+      {loading ? (
+        <Loder />
+      ) : (
+        <Fragment>
+          {category.map((cat) => (
+            <Accordion
+              square
+              expanded={current === cat._id}
+              onChange={changeState(cat._id)}
+            >
+              <AccordionSummary expandIcon={<ExpandLessOutlined />}>
+                <Typography>{cat.title}</Typography>
+                <Divider/>
+              </AccordionSummary>
+              {cat.sub_category.length>0&&cat.sub_category.map(sub=><AccordionDetails textAlign='center'>{sub.title}</AccordionDetails>)}
+            </Accordion>
+          ))}
+        </Fragment>
+      )}
       {/* <List>
         <ListItem>
           <ListItemText primary="food" onClick={() => setOpenSub(!opensub)} />
@@ -60,21 +88,22 @@ const MenuItemsDrawer = ({ open, onClose }) => {
         </Collapse>
       </List> */}
 
-      <List disablePadding>
+      {/* <List disablePadding>
         {loading ? (
           <Loader />
         ) : (
           <Fragment>
             {" "}
             {<span ref={topOfList} />}
-            {menusections.map((cat, index) => (
-              <ListItem onClick={onClose} key={index} button component={Typography} paragraph>
-                {cat.title}
-              </ListItem>
+            {menusections.map((data, index) => (
+              
             ))}
           </Fragment>
         )}
-      </List>
+        <ListItem onClick={onClose} button component={Typography} paragraph>
+                food
+              </ListItem>
+      </List> */}
     </SwipeableDrawer>
   );
 };
