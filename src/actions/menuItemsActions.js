@@ -270,6 +270,7 @@ export const getOutlets = (brand) => async (dispatch) => {
       { brand },
       config
     );
+    localStorage.setItem('brandimg',data.brandimg)
     dispatch({ type: GET_OUTLETS_SUCCESS, payload: data.data });
   } catch (error) {
     dispatch({

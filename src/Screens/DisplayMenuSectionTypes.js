@@ -18,29 +18,37 @@ const DisplayMenuSectionTypes = ({ match }) => {
       <center>
         <div className="header" style={{ paddingTop: 10 }}>
           <img
-            src="https://flogginimages.s3.ap-south-1.amazonaws.com/outlets/outlets_252_1608648981.5720768.png"
+            src={localStorage.getItem("brandimg")}
             className="brand_small_banner"
             alt=""
           />
         </div>
 
         <div className="responsive">
-          <h1> Welcome to {localStorage.getItem('branch')}</h1>
+          <h1> Welcome to {localStorage.getItem("branch")}</h1>
           {loading ? (
             <Loder />
           ) : (
             <Fragment>
-              {mstype.map((menu) => (
-                <Link
-                  to={`/${brandId}/${outletId}/${menu.id}`}
-                  style={{ textDecoration: "none", color: "black" }}
-                >
-                  <div key={menu._id} className="gallery1">
-                    {/* <hr className="solid"/> */}
-                    <div className="desc">View {menu.name} Menu</div>
-                  </div>
-                </Link>
-              ))}
+              {mstype.length > 0 ? (
+                <Fragment>
+                  {mstype.map((menu) => (
+                    <Link
+                      to={`/${brandId}/${outletId}/${menu.id}`}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      <div key={menu._id} className="gallery1">
+                        {/* <hr className="solid"/> */}
+                        <div className="desc">View {menu.name} Menu</div>
+                      </div>
+                    </Link>
+                  ))}
+                </Fragment>
+              ) : (
+                <h3 style={{ color: "red" }}>
+                  Sorry No Menu Sections Availabe
+                </h3>
+              )}
             </Fragment>
           )}
         </div>

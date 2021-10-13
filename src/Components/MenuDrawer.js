@@ -10,6 +10,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   Divider,
+  Drawer,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getMenuBar, getMenuSections } from "../actions/menuItemsActions";
@@ -21,17 +22,19 @@ import {
   ExpandLessOutlined,
   ExpandMore,
 } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
 import Loder from "./Loder";
+import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
+  paperAnchorLeft:{
+    left: '271px',
+    right: 'auto',
+    top: '103px',
+  }
 }));
 
 const MenuItemsDrawer = ({ open, onClose }) => {
@@ -48,12 +51,14 @@ const MenuItemsDrawer = ({ open, onClose }) => {
   }, [getMenuBar]);
 
   return (
-    <SwipeableDrawer
-      anchor="left"
+    <Drawer
+    className={classes.paperAnchorLeft}
+      // anchor="left"
       open={open}
       onOpen={onClose}
       onClose={onClose}
-      style={{ height: "50vh", width: "100vh" }}
+      //variant="permanent"
+       style={{ height: "50px", width: "50px" }}
     >
       {loading ? (
         <Loder />
@@ -104,7 +109,7 @@ const MenuItemsDrawer = ({ open, onClose }) => {
                 food
               </ListItem>
       </List> */}
-    </SwipeableDrawer>
+    </Drawer>
   );
 };
 

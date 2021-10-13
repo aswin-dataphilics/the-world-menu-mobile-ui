@@ -16,14 +16,29 @@ import { getMenuItems } from "../actions/menuItemsActions";
 import { Fragment } from "react";
 import Loader from "../Components/Loder";
 //import "./style.css";
+import { makeStyles } from "@material-ui/core/styles";
+import Badge from "@material-ui/core/Badge";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    [theme.breakpoints.up("sm")]: {
+      width: "142%",
+      // alignItems: "center",
+      marginLeft: "-19%",
+      marginRight: "30%",
+    },
+    //justifyContent: "center",
+  },
+}));
+
 const MenuItemsScreen = ({ match }) => {
   let menusectionId = match.params.menusectionId;
+  const classes = useStyles();
   const outletId = match.params.outletId;
   const brandId = match.params.brandId;
   const msTypeId = match.params.msTypeId;
   const dispatch = useDispatch();
   const { loading, error, items } = useSelector((state) => state.menuItems);
-
+  console.log(items);
   useEffect(() => {
     dispatch(getMenuItems(outletId, msTypeId));
   }, [getMenuItems]);
@@ -41,14 +56,12 @@ const MenuItemsScreen = ({ match }) => {
                 {items.map((item) => (
                   <Grid item key={item._id} xs={12}>
                     <Card
+                      className={classes.root}
                       onClick={() => {
                         localStorage.setItem("item", JSON.stringify(item));
                       }}
                     >
-                      <CardActionArea
-                        component={Link}
-                        to={`/${brandId}/${outletId}/${menusectionId}/${msTypeId}/${item._id}`}
-                      >
+                      <CardActionArea>
                         <Grid container>
                           <Grid item xs={5}>
                             <CardMedia
@@ -78,9 +91,16 @@ const MenuItemsScreen = ({ match }) => {
                               <Typography
                                 style={{ fontWeight: "normal", fontSize: 18 }}
                               >
-                                {item.name}
-                                {"  "}[{`${item.health_options.slice(0, 1)}...`}
-                                ]
+                                {item.name} {"  "}{" "}
+                                <img
+                                  src={`/images/${item.special_tags}.jpg`}
+                                  alt="no tag"
+                                  style={{
+                                    height: "15px",
+                                    width: "15px",
+                                  }}
+                                />{" "}
+                                {`${item.health_options}`}
                                 <img
                                   src={`/images/${item.food_type}.png`}
                                   alt=""
@@ -106,15 +126,15 @@ const MenuItemsScreen = ({ match }) => {
                               >
                                 {item.price}
                                 {item.addons.length > 0 && (
-                                  <a
-                                    href=""
+                                  <Link
+                                    to={`/${brandId}/${outletId}/${menusectionId}/${msTypeId}/${item._id}`}
                                     style={{
                                       float: "right",
                                       textDecoration: "none",
                                     }}
                                   >
                                     Add
-                                  </a>
+                                  </Link>
                                 )}
                               </Typography>
                             </CardContent>

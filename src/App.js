@@ -23,8 +23,20 @@ import AdminAddFoodItemsListScreen from "./Screens/Admin/AddITemsScreen";
 import DisplayOutlets from "./Screens/DisplayOutlets";
 import DisplayMenuSectionTypes from "./Screens/DisplayMenuSectionTypes";
 import DisplayMenuSections from "./Screens/DisplayMenuSections";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    //display: "flex",
+    [theme.breakpoints.up('sm')]:{
+      alignItems:'center',
+      marginLeft:'25%',
+      marginRight:'25%',
+    }
+  },
+}));
 
 function App() {
+  const classes = useStyles();
   // eslint-disable-next-line
   const [dark, setDark] = useState(false);
 
@@ -35,11 +47,12 @@ function App() {
         main: "#47d147",
       },
     },
+
   });
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Grid xs={12} md={12} lg={12}>
+        <Grid xs={12} md={12} lg={12} className={classes.root}>
           <Switch>
             <Route path="/login" component={LoginScreen} exact />
             <Route path="/admin/dashboard" component={AdminDashboardScreen} />
@@ -75,8 +88,8 @@ function App() {
             />
 
             <Route>
+              <Grid container justify='center'  alignItems='center' direction='column' xs={12} md={12} lg={12} >
               <Header />
-              <Grid container xs={12} md={12} lg={12} >
                 {/* `<Grid
                 item
                 xs={3}

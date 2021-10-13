@@ -26,10 +26,23 @@ import { grey } from "@material-ui/core/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { getMenuItem } from "../actions/menuItemsActions";
 import Loder from "../Components/Loder";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    [theme.breakpoints.up("sm")]: {
+      width:'68%',
+     // alignItems: "center",
+      marginLeft: "17%",
+      marginRight: "30%",
+    },
+    //justifyContent: "center",
+  }
+}));
 
 const FoodDetailsScreen = ({ history, match }) => {
   let menusectionId = match.params.menusectionId;
   const outletId = match.params.outletId;
+  const classes = useStyles();
   const brandId = match.params.brandId;
   const msTypeId = match.params.msTypeId;
   const itemId = match.params.itemId;
@@ -42,7 +55,7 @@ const FoodDetailsScreen = ({ history, match }) => {
   }, [dispatch]);
 
   return (
-    <Box pt={13} pr={1}>
+    <Box className={classes.root} pt={14} pr={1}>
       {loading ? (
         <Loder />
       ) : (
